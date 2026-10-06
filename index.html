@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cabañas Los Ceibos | Villa Carlos Paz, Córdoba</title>
+  <meta name="description" content="Cabañas para 2 a 6 personas en Villa Carlos Paz. Reservá directo con nosotros, sin comisiones de plataformas.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* colores y fuentes */
+    :root {
+      --lago: #0E4A5A;
+      --lago-oscuro: #08313C;
+      --niebla: #EDF2F1;
+      --piedra: #1F2D32;
+      --musgo: #5B7566;
+      --sol: #E9A93B;
+      --blanco: #FFFFFF;
+      --whatsapp: #128C4A;
+
+      --fuente-titulos: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+      --fuente-texto: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-padding-top: 1rem; }
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--fuente-texto);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      color: var(--piedra);
+      background: var(--niebla);
+    }
+
+    h1, h2, h3 {
+      font-family: var(--fuente-titulos);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    p { margin: 0; }
+    a { color: inherit; }
+
+    :focus-visible {
+      outline: 3px solid var(--sol);
+      outline-offset: 3px;
+    }
+
+    .contenedor { max-width: 1120px; margin: 0 auto; }
+    .seccion { padding: clamp(3.5rem, 8vw, 7rem) 1.25rem; }
+
+    /* si no está la foto queda el color de fondo */
+    .foto {
+      background-image: var(--foto);
+      background-size: cover;
+      background-position: center;
+      background-color: var(--lago);
+    }
+
+    /* botones */
+    .boton {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      padding: .85rem 1.5rem;
+      border: 0;
+      border-radius: 10px;
+      font: 600 1rem/1 var(--fuente-texto);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color .15s ease;
+    }
+    .boton-sol { background: var(--sol); color: var(--lago-oscuro); }
+    .boton-sol:hover { background: #F1B957; }
+    .boton-lago { background: var(--lago); color: var(--blanco); }
+    .boton-lago:hover { background: var(--lago-oscuro); }
+
+    /* aviso de demo */
+    .aviso-demo {
+      background: var(--piedra);
+      color: var(--blanco);
+      text-align: center;
+      font-size: .9rem;
+      padding: .6rem 1rem;
+    }
+    .aviso-demo a { color: var(--sol); font-weight: 600; }
+
+    /* portada */
+    .portada {
+      position: relative;
+      isolation: isolate;
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      color: var(--blanco);
+      background: linear-gradient(180deg, #2A7F94 0%, var(--lago) 55%, var(--lago-oscuro) 100%);
+      overflow: hidden;
+    }
+
+    /* sierras dibujadas, se ven si no hay foto */
+    .portada-sierras {
+      position: absolute;
+      inset: auto 0 0 0;
+      width: 100%;
+      height: 55%;
+      z-index: -3;
+    }
+    .portada-foto {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+    }
+    .portada::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(90deg, rgba(8,49,60,.82) 0%, rgba(8,49,60,.35) 70%, rgba(8,49,60,.15) 100%);
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem 1.25rem;
+      max-width: 1120px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .logo {
+      font-family: var(--fuente-titulos);
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+    .menu nav { display: none; gap: 1.75rem; }
+    .menu nav a { text-decoration: none; font-weight: 500; opacity: .9; }
+    .menu nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
+    .menu .boton { padding: .65rem 1.1rem; font-size: .95rem; }
+
+    .portada-contenido {
+      flex: 1;
+      display: grid;
+      align-content: end;
+      gap: 2rem;
+      max-width: 1120px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 2.5rem;
+    }
+    .portada h1 {
+      font-size: clamp(2.5rem, 7.5vw, 5rem);
+      font-weight: 700;
+      max-width: 14ch;
+    }
+    .portada-sub {
+      margin-top: 1.25rem;
+      max-width: 46ch;
+      font-size: 1.15rem;
+      opacity: .92;
+    }
+
+    /* form de consulta */
+    .consulta {
+      background: var(--blanco);
+      color: var(--piedra);
+      border-radius: 20px;
+      padding: 1.25rem;
+      display: grid;
+      gap: 1rem;
+      max-width: 460px;
+      box-shadow: 0 18px 40px rgba(8, 49, 60, .35);
+    }
+    .consulta h2 { font-size: 1.35rem; }
+    .consulta-campos { display: grid; gap: .75rem; grid-template-columns: 1fr 1fr; }
+    .campo { display: grid; gap: .3rem; }
+    .campo-ancho { grid-column: 1 / -1; }
+    .campo label { font-size: .85rem; font-weight: 600; color: var(--musgo); }
+    .campo input, .campo select {
+      width: 100%;
+      font: inherit;
+      color: var(--piedra);
+      background: var(--niebla);
+      border: 2px solid transparent;
+      border-radius: 10px;
+      padding: .7rem .75rem;
+    }
+    .campo input:focus, .campo select:focus {
+      outline: none;
+      border-color: var(--lago);
+      background: var(--blanco);
+    }
+    .consulta-error { color: #B3261E; font-size: .9rem; font-weight: 500; min-height: 1.3em; }
+    .consulta-nota { font-size: .85rem; color: var(--musgo); }
+
+    @media (min-width: 900px) {
+      .menu nav { display: flex; }
+      .portada-contenido {
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        padding-bottom: 4rem;
+      }
+    }
+
+    /* cabañas */
+    .titulo-seccion { font-size: clamp(2rem, 4.5vw, 3rem); max-width: 18ch; }
+    .intro-seccion { margin-top: 1rem; max-width: 52ch; color: #3E5057; }
+
+    .cabanas { margin-top: 3rem; display: grid; gap: 3.5rem; }
+    .cabana { display: grid; gap: 1.5rem; align-items: center; }
+    .cabana .foto {
+      aspect-ratio: 4 / 3;
+      border-radius: 18px;
+    }
+    .cabana h3 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+    .cabana-capacidad { margin-top: .4rem; font-weight: 600; color: var(--musgo); }
+    .cabana-texto { margin-top: 1rem; max-width: 46ch; }
+    .cabana-detalles { margin: 1rem 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; }
+    .cabana-detalles li {
+      background: var(--blanco);
+      border-radius: 6px;
+      padding: .3rem .8rem;
+      font-size: .9rem;
+    }
+    .cabana-precio { margin-top: 1.5rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
+    .cabana-precio strong { font-family: var(--fuente-titulos); font-size: 1.5rem; }
+    .cabana-precio span { color: var(--musgo); font-size: .95rem; }
+
+    @media (min-width: 800px) {
+      .cabana { grid-template-columns: 1.15fr 1fr; gap: 3.5rem; }
+      .cabana:nth-child(even) .foto { order: 2; }
+    }
+
+    /* servicios */
+    .servicios-bloque { background: var(--blanco); }
+    .servicios { display: grid; gap: 2rem; }
+    .lista-servicios { margin: 0; padding: 0; list-style: none; }
+    .lista-servicios li {
+      display: grid;
+      gap: .15rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #D5DEDC;
+    }
+    .lista-servicios li:first-child { border-top: 1px solid #D5DEDC; }
+    .lista-servicios strong { font-weight: 600; }
+    .lista-servicios span { color: #51656B; font-size: .97rem; }
+
+    @media (min-width: 800px) {
+      .servicios { grid-template-columns: 1fr 1.4fr; gap: 4rem; }
+      .servicios .titulo-seccion { position: sticky; top: 2rem; align-self: start; }
+    }
+
+    /* galería */
+    .galeria {
+      margin-top: 2.5rem;
+      display: grid;
+      gap: .75rem;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 150px;
+    }
+    .galeria .foto {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .galeria .foto span {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 1.5rem .85rem .6rem;
+      color: var(--blanco);
+      font-size: .9rem;
+      font-weight: 500;
+      background: linear-gradient(0deg, rgba(8,49,60,.7), transparent);
+    }
+    .g1 { grid-column: span 2; grid-row: span 2; background-color: #1E6B7E; }
+    .g2 { grid-row: span 2; background-color: #5B7566; }
+    .g3 { background-color: #2B8399; }
+    .g4 { background-color: #8A9B6E; }
+    .g5 { grid-column: span 2; background-color: #0E4A5A; }
+    .g6 { grid-column: span 2; background-color: #6E8F86; }
+
+    @media (min-width: 800px) {
+      .galeria { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; }
+    }
+
+    /* ubicación */
+    .ubicacion { display: grid; gap: 2rem; }
+    .ubicacion-datos { display: grid; gap: 1.25rem; align-content: start; }
+    .ubicacion-datos dt { font-weight: 600; color: var(--musgo); font-size: .9rem; }
+    .ubicacion-datos dd { margin: .15rem 0 0; font-size: 1.05rem; }
+    .mapa {
+      width: 100%;
+      min-height: 340px;
+      border: 0;
+      border-radius: 18px;
+      background: #D5DEDC;
+    }
+    @media (min-width: 800px) {
+      .ubicacion { grid-template-columns: 1fr 1.5fr; gap: 3rem; }
+      .mapa { min-height: 420px; }
+    }
+
+    /* contacto y pie */
+    .contacto-bloque { background: var(--lago-oscuro); color: var(--blanco); }
+    .contacto { display: grid; gap: 1.5rem; justify-items: start; }
+    .contacto h2 { font-size: clamp(2rem, 5vw, 3.4rem); max-width: 16ch; }
+    .contacto p { max-width: 46ch; opacity: .88; }
+    .contacto-redes { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; opacity: .85; font-size: .97rem; }
+
+    .pie {
+      background: var(--lago-oscuro);
+      color: rgba(255,255,255,.72);
+      border-top: 1px solid rgba(255,255,255,.14);
+      padding: 1.5rem 1.25rem 6rem;
+      font-size: .9rem;
+    }
+    .pie a { color: var(--sol); font-weight: 600; }
+
+    /* boton de whatsapp que flota */
+    .flotante {
+      position: fixed;
+      right: 1rem;
+      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+      z-index: 20;
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .85rem 1.2rem;
+      border-radius: 12px;
+      background: var(--whatsapp);
+      color: var(--blanco);
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 8px 22px rgba(0,0,0,.28);
+    }
+    .flotante:hover { background: #0D7640; }
+    .flotante svg { width: 22px; height: 22px; fill: currentColor; }
+  </style>
+</head>
+
+<body>
+
+  <!-- cartel de demo, sacarlo cuando sea de un cliente -->
+  <div class="aviso-demo">
+    Página de ejemplo con datos ficticios. ¿Querés una igual para tu alojamiento?
+    <a href="#" data-wa-diseno="Hola! Vi la página de ejemplo de cabañas y quiero una para mi alojamiento.">Escribime por WhatsApp</a>
+  </div>
+
+  <!-- portada -->
+  <header class="portada">
+
+    <!-- dibujo de las sierras -->
+    <svg class="portada-sierras" viewBox="0 0 1440 400" preserveAspectRatio="none" aria-hidden="true">
+      <circle cx="1130" cy="120" r="70" fill="#E9A93B" opacity=".9"/>
+      <path d="M0,260 L120,200 L240,240 L380,170 L520,230 L680,150 L840,220 L1000,180 L1160,240 L1300,190 L1440,230 L1440,400 L0,400Z" fill="#2A7F94" opacity=".7"/>
+      <path d="M0,320 C200,260 340,330 560,280 C760,235 900,320 1120,285 C1260,262 1360,300 1440,290 L1440,400 L0,400Z" fill="#0B3C49"/>
+      <path d="M0,370 C240,340 420,385 700,360 C980,335 1200,380 1440,355 L1440,400 L0,400Z" fill="#08313C"/>
+    </svg>
+
+    <!-- foto de portada: img/portada.jpg -->
+    <div class="portada-foto foto" style="--foto: url('img/portada.jpg'); background-color: transparent;" role="img" aria-label="Vista de las sierras de Córdoba"></div>
+
+    <div class="menu">
+      <a class="logo" href="#">Cabañas Los Ceibos</a>
+      <nav aria-label="Principal">
+        <a href="#cabanas">Cabañas</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#galeria">Fotos</a>
+        <a href="#ubicacion">Cómo llegar</a>
+      </nav>
+      <a class="boton boton-sol" href="#contacto" data-wa="Hola! Quería hacer una consulta sobre las cabañas.">Consultar</a>
+    </div>
+
+    <div class="portada-contenido">
+      <div>
+        <h1>Tu casa en las sierras, cerca del lago.</h1>
+        <p class="portada-sub">Cabañas para 2 a 6 personas en Villa Carlos Paz. Reservás directo con nosotros y te ahorrás las comisiones.</p>
+      </div>
+
+      <form class="consulta" id="form-consulta" novalidate>
+        <h2>Consultá disponibilidad</h2>
+        <div class="consulta-campos">
+          <div class="campo">
+            <label for="llegada">Llegada</label>
+            <input type="date" id="llegada" name="llegada" required>
+          </div>
+          <div class="campo">
+            <label for="salida">Salida</label>
+            <input type="date" id="salida" name="salida" required>
+          </div>
+          <div class="campo campo-ancho">
+            <label for="personas">Personas</label>
+            <select id="personas" name="personas">
+              <option value="1">1 persona</option>
+              <option value="2" selected>2 personas</option>
+              <option value="3">3 personas</option>
+              <option value="4">4 personas</option>
+              <option value="5">5 personas</option>
+              <option value="6">6 personas</option>
+              <option value="7">7 o más personas</option>
+            </select>
+          </div>
+        </div>
+        <p class="consulta-error" id="consulta-error" role="alert"></p>
+        <button class="boton boton-lago" type="submit">Consultar por WhatsApp</button>
+      </form>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- cabañas -->
+    <section class="seccion" id="cabanas">
+      <div class="contenedor">
+        <h2 class="titulo-seccion">Nuestras cabañas</h2>
+        <p class="intro-seccion">Todas tienen cocina, parrilla propia y vista al parque. Elegí la que se ajuste a tu grupo.</p>
+
+        <div class="cabanas">
+
+          <article class="cabana">
+            <div class="foto" style="--foto: url('img/cabana-aromito.jpg'); background-image: var(--foto), linear-gradient(135deg, #2B8399, #0E4A5A);" role="img" aria-label="Cabaña Aromito"></div>
+            <div>
+              <h3>Cabaña Aromito</h3>
+              <p class="cabana-capacidad">Para 2 personas</p>
+              <p class="cabana-texto">Ideal para parejas. Un ambiente luminoso con dormitorio matrimonial, cocina integrada y galería con vista al jardín.</p>
+              <ul class="cabana-detalles">
+                <li>Cama matrimonial</li>
+                <li>Aire acondicionado</li>
+                <li>Galería con parrilla</li>
+              </ul>
+              <div class="cabana-precio">
+                <div><strong>Desde $60.000</strong> <span>por noche</span></div>
+                <a class="boton boton-lago" href="#contacto" data-wa="Hola! Me interesa la Cabaña Aromito (2 personas). ¿Tienen disponibilidad?">Consultar esta cabaña</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="cabana">
+            <div class="foto" style="--foto: url('img/cabana-algarrobo.jpg'); background-image: var(--foto), linear-gradient(135deg, #5B7566, #1E6B7E);" role="img" aria-label="Cabaña Algarrobo"></div>
+            <div>
+              <h3>Cabaña Algarrobo</h3>
+              <p class="cabana-capacidad">Para 4 personas</p>
+              <p class="cabana-texto">Pensada para familias. Dos dormitorios, living comedor amplio y un deck con mesa para las comidas al aire libre.</p>
+              <ul class="cabana-detalles">
+                <li>2 dormitorios</li>
+                <li>Cochera cubierta</li>
+                <li>Deck con parrilla</li>
+              </ul>
+              <div class="cabana-precio">
+                <div><strong>Desde $95.000</strong> <span>por noche</span></div>
+                <a class="boton boton-lago" href="#contacto" data-wa="Hola! Me interesa la Cabaña Algarrobo (4 personas). ¿Tienen disponibilidad?">Consultar esta cabaña</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="cabana">
+            <div class="foto" style="--foto: url('img/cabana-molle.jpg'); background-image: var(--foto), linear-gradient(135deg, #0E4A5A, #5B7566);" role="img" aria-label="Cabaña Molle"></div>
+            <div>
+              <h3>Cabaña Molle</h3>
+              <p class="cabana-capacidad">Para 6 personas</p>
+              <p class="cabana-texto">La más grande, para grupos de amigos o familias numerosas. Tres dormitorios, dos baños y acceso directo a la pileta.</p>
+              <ul class="cabana-detalles">
+                <li>3 dormitorios</li>
+                <li>2 baños</li>
+                <li>Acceso a la pileta</li>
+              </ul>
+              <div class="cabana-precio">
+                <div><strong>Desde $140.000</strong> <span>por noche</span></div>
+                <a class="boton boton-lago" href="#contacto" data-wa="Hola! Me interesa la Cabaña Molle (6 personas). ¿Tienen disponibilidad?">Consultar esta cabaña</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- servicios -->
+    <section class="seccion servicios-bloque" id="servicios">
+      <div class="contenedor servicios">
+        <h2 class="titulo-seccion">Qué incluye la estadía</h2>
+        <ul class="lista-servicios">
+          <li><strong>Pileta con solárium</strong><span>Abierta todo el día en temporada, con reposeras.</span></li>
+          <li><strong>Parrilla individual</strong><span>Cada cabaña tiene la suya, con leña y utensilios.</span></li>
+          <li><strong>Wifi en todo el predio</strong><span>Rápido, para trabajar o ver series.</span></li>
+          <li><strong>Cochera cubierta</strong><span>Un lugar por cabaña, sin costo extra.</span></li>
+          <li><strong>Aire acondicionado y calefacción</strong><span>Frío y calor, según la época.</span></li>
+          <li><strong>Ropa blanca incluida</strong><span>Sábanas y toallas, renovadas durante la estadía.</span></li>
+          <li><strong>Mascotas</strong><span>Aceptamos mascotas pequeñas. Consultanos antes de viajar.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- galería -->
+    <section class="seccion" id="galeria">
+      <div class="contenedor">
+        <h2 class="titulo-seccion">Fotos</h2>
+        <div class="galeria">
+          <div class="foto g1" style="--foto: url('img/galeria-1.jpg');" role="img" aria-label="Vista general del complejo"><span>El complejo</span></div>
+          <div class="foto g2" style="--foto: url('img/galeria-2.jpg');" role="img" aria-label="Parrilla en la galería"><span>Parrilla</span></div>
+          <div class="foto g3" style="--foto: url('img/galeria-3.jpg');" role="img" aria-label="Pileta"><span>Pileta</span></div>
+          <div class="foto g4" style="--foto: url('img/galeria-4.jpg');" role="img" aria-label="Interior de una cabaña"><span>Interior</span></div>
+          <div class="foto g5" style="--foto: url('img/galeria-5.jpg');" role="img" aria-label="Las sierras al atardecer"><span>Sierras al atardecer</span></div>
+          <div class="foto g6" style="--foto: url('img/galeria-6.jpg');" role="img" aria-label="Lago San Roque"><span>Lago San Roque</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ubicación -->
+    <section class="seccion servicios-bloque" id="ubicacion">
+      <div class="contenedor">
+        <h2 class="titulo-seccion">Cómo llegar</h2>
+        <div class="ubicacion" style="margin-top: 2rem;">
+          <dl class="ubicacion-datos">
+            <div>
+              <dt>Dirección</dt>
+              <dd>Av. Ejemplo 1234, Villa Carlos Paz, Córdoba</dd>
+            </div>
+            <div>
+              <dt>Entrada y salida</dt>
+              <dd>Ingreso desde las 14:00 y salida hasta las 10:00</dd>
+            </div>
+            <div>
+              <dt>Desde la terminal</dt>
+              <dd>A pocos minutos en remís o colectivo urbano</dd>
+            </div>
+          </dl>
+          <!-- cambiar la dirección después de q= cuando tenga la real -->
+          <iframe class="mapa" title="Mapa de Villa Carlos Paz" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                  src="https://www.google.com/maps?q=Villa+Carlos+Paz,+C%C3%B3rdoba,+Argentina&output=embed"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- contacto -->
+    <section class="seccion contacto-bloque" id="contacto">
+      <div class="contenedor contacto">
+        <h2>Reservá directo con nosotros</h2>
+        <p>Mandanos un WhatsApp con las fechas y cuántas personas son, y te pasamos tarifas y disponibilidad.</p>
+        <a class="boton boton-sol" href="#" data-wa="Hola! Quería consultar disponibilidad en Cabañas Los Ceibos.">Escribir por WhatsApp</a>
+        <div class="contacto-redes">
+          <span>Instagram: @cabanaslosceibos</span>
+          <span>Facebook: Cabañas Los Ceibos</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      Página de ejemplo creada por <strong>Santiago Pérez</strong>.
+      <a href="#" data-wa-diseno="Hola! Vi la página de ejemplo de cabañas y quiero una para mi alojamiento.">¿Querés una para tu negocio?</a>
+    </div>
+  </footer>
+
+  <!-- boton flotante -->
+  <a class="flotante" href="#" data-wa="Hola! Quería consultar por las cabañas." aria-label="Escribir por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
+    Escribinos
+  </a>
+
+  <script>
+    // numeros de whatsapp (54 + 9 + código de área sin 0 + número sin 15)
+    const WHATSAPP_ALOJAMIENTO = "5493541393336"; // por ahora el mío porque es demo
+    const WHATSAPP_DISENADOR   = "5493541393336"; // el mío
+
+    function armarLinkWA(numero, mensaje) {
+      return "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje);
+    }
+
+    // los links con data-wa abren whatsapp con su mensaje
+    document.querySelectorAll("[data-wa]").forEach(function (a) {
+      a.href = armarLinkWA(WHATSAPP_ALOJAMIENTO, a.dataset.wa);
+      a.target = "_blank";
+      a.rel = "noopener";
+    });
+
+    // links para que me escriban a mí
+    document.querySelectorAll("[data-wa-diseno]").forEach(function (a) {
+      a.href = armarLinkWA(WHATSAPP_DISENADOR, a.dataset.waDiseno);
+      a.target = "_blank";
+      a.rel = "noopener";
+    });
+
+    // el formulario de consulta
+    const formConsulta = document.getElementById("form-consulta");
+    const inpLlegada = document.getElementById("llegada");
+    const inpSalida = document.getElementById("salida");
+    const selPersonas = document.getElementById("personas");
+    const msgError = document.getElementById("consulta-error");
+
+    function fechaParaInput(fecha) {
+      const anio = fecha.getFullYear();
+      const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+      const dia = String(fecha.getDate()).padStart(2, "0");
+      return anio + "-" + mes + "-" + dia;
+    }
+
+    function fechaAR(texto) {
+      const partes = texto.split("-");
+      return partes[2] + "/" + partes[1] + "/" + partes[0];
+    }
+
+    // no dejar elegir fechas que ya pasaron
+    const hoy = fechaParaInput(new Date());
+    inpLlegada.min = hoy;
+    inpSalida.min = hoy;
+
+    // la salida tiene que ir después de la llegada
+    inpLlegada.addEventListener("change", function () {
+      if (inpLlegada.value) {
+        inpSalida.min = inpLlegada.value;
+        if (inpSalida.value && inpSalida.value <= inpLlegada.value) {
+          inpSalida.value = "";
+        }
+      }
+    });
+
+    formConsulta.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+      msgError.textContent = "";
+
+      if (!inpLlegada.value || !inpSalida.value) {
+        msgError.textContent = "Elegí la fecha de llegada y la de salida.";
+        return;
+      }
+      if (inpSalida.value <= inpLlegada.value) {
+        msgError.textContent = "La salida tiene que ser después de la llegada.";
+        return;
+      }
+
+      const personas = selPersonas.value === "7"
+        ? "7 o más personas"
+        : selPersonas.value + (selPersonas.value === "1" ? " persona" : " personas");
+
+      const mensaje = "Hola! Quería consultar disponibilidad en Cabañas Los Ceibos del " +
+        fechaAR(inpLlegada.value) + " al " + fechaAR(inpSalida.value) +
+        " para " + personas + ".";
+
+      window.open(armarLinkWA(WHATSAPP_ALOJAMIENTO, mensaje), "_blank", "noopener");
+    });
+  </script>
+</body>
+</html>
