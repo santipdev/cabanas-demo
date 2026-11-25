@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autolago Multimarcas | Venta de autos y motos en Villa Carlos Paz</title>
+<meta name="description" content="Venta, permuta, consignación y financiación de autos y motos en Villa Carlos Paz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* colores y fuentes */
+:root{
+  --cobalto:#1F3BD8; --cobalto-osc:#162CAA; --noche:#0A1230; --hielo:#EEF2FF;
+  --sol:#FFC93C; --sol-claro:#FFD86B; --linea:#CBD3EE; --texto:#141B3A; --suave:#56608A; --wa:#128C4A;
+  --titulos:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --cuerpo:"Barlow","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font:400 1.0625rem/1.6 var(--cuerpo);color:var(--texto);background:#fff}
+h1,h2,h3{font-family:var(--titulos);font-weight:700;line-height:1;letter-spacing:.01em;margin:0}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sol);outline-offset:3px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 1.25rem}
+.sec{padding:clamp(3rem,7vw,6rem) 0}
+h2{font-size:clamp(2.2rem,5vw,3.4rem)}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:.85rem 1.4rem;border:0;border-radius:3px;font:600 1rem/1 var(--cuerpo);text-decoration:none;cursor:pointer;transition:background-color .15s}
+.btn-sol{background:var(--sol);color:var(--noche)}
+.btn-sol:hover{background:var(--sol-claro)}
+.btn-linea{color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.55)}
+.btn-linea:hover{background:rgba(255,255,255,.12)}
+.btn-cobalto{background:var(--cobalto);color:#fff}
+.btn-cobalto:hover{background:var(--cobalto-osc)}
+
+/* cartel de demo */
+.demo{background:var(--sol);color:var(--noche);text-align:center;font-size:.92rem;font-weight:600;padding:.55rem 1rem}
+.demo a{text-decoration:underline}
+
+/* portada */
+.hero{background:var(--cobalto);color:#fff;overflow:hidden}
+.top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:1.1rem;padding-bottom:1.1rem}
+.logo{font:700 1.7rem/1 var(--titulos);text-decoration:none;letter-spacing:.02em}
+.top nav{display:none;gap:1.75rem}
+.top nav a{text-decoration:none;font-weight:500}
+.top nav a:hover{text-decoration:underline;text-underline-offset:6px}
+.top .btn{padding:.65rem 1.1rem;font-size:.95rem}
+.hero-body{display:grid;gap:2rem;padding-top:2rem;padding-bottom:0}
+.hero h1{font-size:clamp(3rem,10vw,6rem);max-width:12ch}
+.hero-texto p{margin-top:1.25rem;max-width:44ch;font-size:1.15rem;opacity:.93}
+.hero-botones{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
+.hero-img{position:relative;min-height:260px;margin:0 -1.25rem;background:linear-gradient(160deg,#3F5AF2,var(--noche));display:grid;place-items:center;color:rgba(255,255,255,.3)}
+.hero-img svg{width:58%;max-width:420px}
+.hero-img::before,.car::before{content:"";position:absolute;inset:0;background-image:var(--foto);background-size:cover;background-position:center}
+@media(min-width:900px){
+  .top nav{display:flex}
+  .hero-body{grid-template-columns:1.05fr 1fr;align-items:center;padding-bottom:0}
+  .hero-texto{padding-bottom:4rem}
+  .hero-img{margin:0;min-height:480px;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%)}
+}
+
+/* disponibles */
+.filtros{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.5rem 0 2rem}
+.chip{font:600 .95rem/1 var(--cuerpo);padding:.65rem 1.1rem;border:2px solid var(--noche);border-radius:3px;background:#fff;color:var(--noche);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--noche);color:#fff}
+.grilla{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.veh{border-bottom:3px solid var(--noche);background:#fff}
+.veh[hidden]{display:none}
+.car{position:relative;aspect-ratio:4/3;background:linear-gradient(160deg,#3F5AF2,var(--noche));display:grid;place-items:center;color:rgba(255,255,255,.3)}
+.car svg{width:60%}
+.tag{position:absolute;top:.75rem;left:0;z-index:2;background:var(--sol);color:var(--noche);font-weight:600;font-size:.85rem;padding:.3rem .7rem}
+.info{padding:1rem 0 1.25rem;display:grid;gap:.75rem}
+.info h3{font-size:1.6rem}
+.datos{display:flex;align-items:center;gap:.75rem;color:var(--suave)}
+.patente{font:700 1.05rem/1 var(--titulos);letter-spacing:.06em;color:var(--noche);background:#fff;border:2px solid var(--noche);border-top-width:6px;border-top-color:var(--cobalto);padding:.2rem .6rem}
+.info .btn{justify-self:start;padding:.7rem 1.1rem;font-size:.95rem}
+
+/* cotizá tu usado */
+.cotiza{background:var(--hielo)}
+.cotiza-grid{display:grid;gap:2rem;align-items:start}
+.cotiza p.lead{margin-top:1rem;max-width:42ch;color:var(--suave)}
+.form{display:grid;gap:1rem;grid-template-columns:1fr 1fr;background:#fff;padding:1.5rem;border-top:6px solid var(--cobalto)}
+.campo{display:grid;gap:.3rem}
+.campo.ancho{grid-column:1/-1}
+.campo label{font-weight:600;font-size:.9rem;color:var(--suave)}
+.campo input{font:inherit;color:var(--texto);padding:.75rem;border:2px solid var(--linea);border-radius:3px;background:#fff;width:100%}
+.campo input:focus{outline:none;border-color:var(--cobalto)}
+.error{grid-column:1/-1;color:#B3261E;font-size:.92rem;font-weight:500;min-height:1.3em}
+.form .btn{grid-column:1/-1}
+@media(min-width:900px){.cotiza-grid{grid-template-columns:1fr 1.1fr;gap:4rem}}
+
+/* servicios */
+.servicios{display:grid;gap:1.75rem;margin-top:2.5rem;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.serv{border-top:4px solid var(--cobalto);padding-top:1rem}
+.serv h3{font-size:1.7rem;margin-bottom:.5rem}
+.serv p{color:var(--suave);font-size:1rem}
+
+/* ubicación */
+.ubicacion{background:var(--noche);color:#fff}
+.ub-grid{display:grid;gap:2rem}
+.ub-grid dl{margin:1.5rem 0 0;display:grid;gap:1.25rem}
+.ub-grid dt{font-weight:600;color:var(--sol)}
+.ub-grid dd{margin:.15rem 0 0}
+.mapa{width:100%;min-height:340px;border:0;background:#1C2650}
+@media(min-width:900px){.ub-grid{grid-template-columns:1fr 1.5fr;gap:3rem}.mapa{min-height:400px}}
+
+/* pie y boton flotante */
+.pie{background:var(--noche);color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.15);padding:1.5rem 0 6rem;font-size:.92rem}
+.pie a{color:var(--sol);font-weight:600}
+.flota{position:fixed;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:20;display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.2rem;border-radius:6px;background:var(--wa);color:#fff;font-weight:600;text-decoration:none;box-shadow:0 8px 22px rgba(0,0,0,.3)}
+.flota:hover{background:#0D7640}
+.flota svg{width:22px;height:22px;fill:currentColor}
+</style>
+</head>
+<body>
+
+<!-- dibujos de auto y moto (se ven si no hay foto) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="auto">
+      <path d="M8 58V48q0-6 8-8l24-4 18-18q4-4 12-4h58q8 0 14 6l16 16 26 5q8 2 8 9v8z" fill="currentColor"/>
+      <circle cx="52" cy="60" r="12" fill="#0A1230" stroke="currentColor" stroke-width="4"/>
+      <circle cx="150" cy="60" r="12" fill="#0A1230" stroke="currentColor" stroke-width="4"/>
+    </g>
+    <g id="moto" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="42" cy="58" r="16"/><circle cx="160" cy="58" r="16"/>
+      <path d="M42 58l30-26h38l20 26M72 32l-8-12h16M110 32l10-12h14"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- cartel de demo, sacarlo cuando sea de un cliente -->
+<div class="demo">
+  Página de ejemplo con datos ficticios. ¿Querés una igual para tu negocio?
+  <a href="#" data-wa-diseno="Hola! Vi la página de ejemplo de la concesionaria y quiero una para mi negocio.">Escribime por WhatsApp</a>
+</div>
+
+<!-- portada -->
+<header class="hero">
+  <div class="wrap top">
+    <a class="logo" href="#">Autolago Multimarcas</a>
+    <nav aria-label="Principal">
+      <a href="#disponibles">Disponibles</a>
+      <a href="#usado">Cotizá tu usado</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#ubicacion">Cómo llegar</a>
+    </nav>
+    <a class="btn btn-sol" href="#contacto" data-wa="Hola! Quería hacer una consulta.">Consultar</a>
+  </div>
+  <div class="wrap hero-body">
+    <div class="hero-texto">
+      <h1>Tu próximo auto, con financiación a tu medida</h1>
+      <p>Venta, permuta y consignación de autos y motos en Villa Carlos Paz. Recibimos tu usado y financiamos en cuotas fijas.</p>
+      <div class="hero-botones">
+        <a class="btn btn-sol" href="#disponibles">Ver disponibles</a>
+        <a class="btn btn-linea" href="#contacto" data-wa="Hola! Quería consultar por la financiación.">Consultar por WhatsApp</a>
+      </div>
+    </div>
+    <!-- foto de portada: img/portada.jpg -->
+    <div class="hero-img" style="--foto:url('img/portada.jpg')" role="img" aria-label="Vehículos en exhibición">
+      <svg viewBox="0 0 200 80" aria-hidden="true"><use href="#auto"/></svg>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- disponibles -->
+<section class="sec" id="disponibles">
+  <div class="wrap">
+    <h2>Disponibles ahora</h2>
+    <p style="margin-top:.75rem;color:var(--suave)">Algunos de los vehículos del momento. Consultá por el stock completo.</p>
+
+    <div class="filtros" role="group" aria-label="Filtrar vehículos">
+      <button class="chip" data-f="todos" aria-pressed="true">Todos</button>
+      <button class="chip" data-f="autos" aria-pressed="false">Autos</button>
+      <button class="chip" data-f="utilitarios" aria-pressed="false">Utilitarios</button>
+      <button class="chip" data-f="motos" aria-pressed="false">Motos</button>
+    </div>
+
+    <div class="grilla">
+      <article class="veh" data-tipo="autos">
+        <div class="car" style="--foto:url('img/corolla.jpg')" role="img" aria-label="Toyota Corolla Cross"><svg viewBox="0 0 200 80" aria-hidden="true"><use href="#auto"/></svg><span class="tag">Nuevo ingreso</span></div>
+        <div class="info"><h3>Toyota Corolla Cross</h3><div class="datos"><span class="patente">2023</span><span>25.000 km</span></div>
+        <a class="btn btn-cobalto" href="#contacto" data-wa="Hola! Me interesa la Toyota Corolla Cross 2023. ¿Sigue disponible?">Consultar por este</a></div>
+      </article>
+      <article class="veh" data-tipo="utilitarios">
+        <div class="car" style="--foto:url('img/kangoo.jpg')" role="img" aria-label="Renault Kangoo"><svg viewBox="0 0 200 80" aria-hidden="true"><use href="#auto"/></svg></div>
+        <div class="info"><h3>Renault Kangoo</h3><div class="datos"><span class="patente">2019</span><span>78.000 km</span></div>
+        <a class="btn btn-cobalto" href="#contacto" data-wa="Hola! Me interesa la Renault Kangoo 2019. ¿Sigue disponible?">Consultar por este</a></div>
+      </article>
+      <article class="veh" data-tipo="autos">
+        <div class="car" style="--foto:url('img/peugeot-208.jpg')" role="img" aria-label="Peugeot 208"><svg viewBox="0 0 200 80" aria-hidden="true"><use href="#auto"/></svg></div>
+        <div class="info"><h3>Peugeot 208</h3><div class="datos"><span class="patente">2021</span><span>41.000 km</span></div>
+        <a class="btn btn-cobalto" href="#contacto" data-wa="Hola! Me interesa el Peugeot 208 2021. ¿Sigue disponible?">Consultar por este</a></div>
+      </article>
+      <article class="veh" data-tipo="utilitarios">
+        <div class="car" style="--foto:url('img/ranger.jpg')" role="img" aria-label="Ford Ranger"><svg viewBox="0 0 200 80" aria-hidden="true"><use href="#auto"/></svg></div>
+        <div class="info"><h3>Ford Ranger</h3><div class="datos"><span class="patente">2020</span><span>90.000 km</span></div>
+        <a class="btn btn-cobalto" href="#contacto" data-wa="Hola! Me interesa la Ford Ranger 2020. ¿Sigue disponible?">Consultar por este</a></div>
+      </article>
+      <article class="veh" data-tipo="motos">
+        <div class="car" style="--foto:url('img/honda-xr150.jpg')" role="img" aria-label="Honda XR 150"><svg viewBox="0 0 200 80" aria-hidden="true"><use href="#moto"/></svg><span class="tag">Nuevo ingreso</span></div>
+        <div class="info"><h3>Honda XR 150</h3><div class="datos"><span class="patente">2022</span><span>8.000 km</span></div>
+        <a class="btn btn-cobalto" href="#contacto" data-wa="Hola! Me interesa la Honda XR 150 2022. ¿Sigue disponible?">Consultar por esta</a></div>
+      </article>
+      <article class="veh" data-tipo="motos">
+        <div class="car" style="--foto:url('img/yamaha-fz150.jpg')" role="img" aria-label="Yamaha FZ 150"><svg viewBox="0 0 200 80" aria-hidden="true"><use href="#moto"/></svg></div>
+        <div class="info"><h3>Yamaha FZ 150</h3><div class="datos"><span class="patente">2021</span><span>12.000 km</span></div>
+        <a class="btn btn-cobalto" href="#contacto" data-wa="Hola! Me interesa la Yamaha FZ 150 2021. ¿Sigue disponible?">Consultar por esta</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- cotizá tu usado -->
+<section class="sec cotiza" id="usado">
+  <div class="wrap cotiza-grid">
+    <div>
+      <h2>¿Querés cambiar tu auto?</h2>
+      <p class="lead">Contanos cuál tenés y te pasamos una cotización por WhatsApp. Lo recibimos como parte de pago.</p>
+    </div>
+    <form class="form" id="form-usado" novalidate>
+      <div class="campo ancho"><label for="modelo">Marca y modelo</label><input id="modelo" type="text" placeholder="Por ejemplo: Volkswagen Gol Trend"></div>
+      <div class="campo"><label for="anio">Año</label><input id="anio" type="number" inputmode="numeric" placeholder="2018"></div>
+      <div class="campo"><label for="km">Kilómetros</label><input id="km" type="text" inputmode="numeric" placeholder="85.000"></div>
+      <p class="error" id="error-usado" role="alert"></p>
+      <button class="btn btn-cobalto" type="submit">Cotizar por WhatsApp</button>
+    </form>
+  </div>
+</section>
+
+<!-- servicios -->
+<section class="sec" id="servicios">
+  <div class="wrap">
+    <h2>Todo en un solo lugar</h2>
+    <div class="servicios">
+      <div class="serv"><h3>Venta</h3><p>Autos y motos usados, con nuevos ingresos todas las semanas.</p></div>
+      <div class="serv"><h3>Permuta</h3><p>Recibimos tu usado como parte de pago.</p></div>
+      <div class="serv"><h3>Financiación</h3><p>Cuotas fijas. Consultá las opciones disponibles.</p></div>
+      <div class="serv"><h3>Consignación</h3><p>Vendemos tu vehículo por vos, sin que pierdas tiempo.</p></div>
+      <div class="serv"><h3>Estética vehicular</h3><p>Lavado, pulido y detallado para que quede como nuevo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ubicación -->
+<section class="sec ubicacion" id="ubicacion">
+  <div class="wrap ub-grid">
+    <div>
+      <h2>Cómo llegar</h2>
+      <dl>
+        <div><dt>Dirección</dt><dd>Av. Ejemplo 1234, Villa Carlos Paz, Córdoba</dd></div>
+        <div><dt>Horarios</dt><dd>Lunes a viernes de 9 a 13 y de 16 a 20. Sábados de 9 a 13.</dd></div>
+        <div><dt>Contacto</dt><dd id="contacto"><a class="btn btn-sol" href="#" data-wa="Hola! Quería hacer una consulta.">Escribinos por WhatsApp</a></dd></div>
+      </dl>
+    </div>
+    <!-- cambiar la dirección después de q= cuando tenga la real -->
+    <iframe class="mapa" title="Mapa de Villa Carlos Paz" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Villa+Carlos+Paz,+C%C3%B3rdoba,+Argentina&output=embed"></iframe>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    Página de ejemplo creada por <strong>Santiago Pérez</strong>.
+    <a href="#" data-wa-diseno="Hola! Vi la página de ejemplo de la concesionaria y quiero una para mi negocio.">¿Querés una para tu negocio?</a>
+  </div>
+</footer>
+
+<a class="flota" href="#" data-wa="Hola! Quería hacer una consulta." aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
+  Escribinos
+</a>
+
+<script>
+// numeros de whatsapp (54 + 9 + código de área sin 0 + número sin 15)
+const WA_NEGOCIO = "5493541393336"; // por ahora el mío porque es demo
+const WA_DISENO  = "5493541393336"; // el mío
+
+function linkWA(num, msg) {
+  return "https://wa.me/" + num + "?text=" + encodeURIComponent(msg);
+}
+
+document.querySelectorAll("[data-wa]").forEach(function (a) {
+  a.href = linkWA(WA_NEGOCIO, a.dataset.wa);
+  a.target = "_blank";
+  a.rel = "noopener";
+});
+document.querySelectorAll("[data-wa-diseno]").forEach(function (a) {
+  a.href = linkWA(WA_DISENO, a.dataset.waDiseno);
+  a.target = "_blank";
+  a.rel = "noopener";
+});
+
+// filtro de vehículos
+const chips = document.querySelectorAll(".chip");
+const vehiculos = document.querySelectorAll(".veh");
+chips.forEach(function (chip) {
+  chip.addEventListener("click", function () {
+    chips.forEach(function (c) { c.setAttribute("aria-pressed", c === chip ? "true" : "false"); });
+    vehiculos.forEach(function (v) {
+      v.hidden = !(chip.dataset.f === "todos" || v.dataset.tipo === chip.dataset.f);
+    });
+  });
+});
+
+// cotizador del usado
+const formUsado = document.getElementById("form-usado");
+const errorUsado = document.getElementById("error-usado");
+formUsado.addEventListener("submit", function (e) {
+  e.preventDefault();
+  errorUsado.textContent = "";
+  const modelo = document.getElementById("modelo").value.trim();
+  const anio = document.getElementById("anio").value.trim();
+  const km = document.getElementById("km").value.trim();
+  if (!modelo || !anio || !km) {
+    errorUsado.textContent = "Completá marca y modelo, año y kilómetros.";
+    return;
+  }
+  const msg = "Hola! Quería cotizar mi usado: " + modelo + ", año " + anio + ", " + km + " km.";
+  window.open(linkWA(WA_NEGOCIO, msg), "_blank", "noopener");
+});
+</script>
+</body>
+</html>
